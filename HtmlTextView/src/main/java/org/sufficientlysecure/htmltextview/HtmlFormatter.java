@@ -33,7 +33,9 @@ public class HtmlFormatter {
                 @Override public OnClickATagListener provideTagClickListener() {
                     return builder.getOnClickATagListener();
                 }
-            }, builder.getIndent(),
+            },
+                builder.getOnImageClickListener(),
+                builder.getIndent(),
             builder.isRemoveTrailingWhiteSpace()
         );
     }
@@ -42,7 +44,7 @@ public class HtmlFormatter {
         OnClickATagListener provideTagClickListener();
     }
 
-    public static Spanned formatHtml(@Nullable String html, ImageGetter imageGetter, ClickableTableSpan clickableTableSpan, DrawTableLinkSpan drawTableLinkSpan, TagClickListenerProvider tagClickListenerProvider, float indent, boolean removeTrailingWhiteSpace) {
+    public static Spanned formatHtml(@Nullable String html, ImageGetter imageGetter, ClickableTableSpan clickableTableSpan, DrawTableLinkSpan drawTableLinkSpan, TagClickListenerProvider tagClickListenerProvider, OnImageClickListener onImageClickListener, float indent, boolean removeTrailingWhiteSpace) {
         final HtmlTagHandler htmlTagHandler = new HtmlTagHandler();
         htmlTagHandler.setClickableTableSpan(clickableTableSpan);
         htmlTagHandler.setDrawTableLinkSpan(drawTableLinkSpan);
@@ -52,10 +54,12 @@ public class HtmlFormatter {
         html = htmlTagHandler.overrideTags(html);
 
         Spanned formattedHtml;
+        WrapperContentHandler wrapperContentHandler=new WrapperContentHandler(htmlTagHandler);
+        wrapperContentHandler.setOnImageClickListener(onImageClickListener);
         if (removeTrailingWhiteSpace) {
-            formattedHtml = removeHtmlBottomPadding(Html.fromHtml(html, imageGetter, new WrapperContentHandler(htmlTagHandler)));
+            formattedHtml = removeHtmlBottomPadding(Html.fromHtml(html, imageGetter, wrapperContentHandler));
         } else {
-            formattedHtml = Html.fromHtml(html, imageGetter, new WrapperContentHandler(htmlTagHandler));
+            formattedHtml = Html.fromHtml(html, imageGetter, wrapperContentHandler);
         }
 
         return formattedHtml;

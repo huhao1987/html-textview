@@ -64,14 +64,14 @@ public class HtmlTextView extends JellyBeanSpanFixTextView {
      * @see org.sufficientlysecure.htmltextview.HtmlTextView#setHtml(int)
      */
     public void setHtml(@RawRes int resId) {
-        setHtml(resId, null);
+        setHtml(resId, null,null);
     }
 
     /**
      * @see org.sufficientlysecure.htmltextview.HtmlTextView#setHtml(String)
      */
     public void setHtml(@NonNull String html) {
-        setHtml(html, null);
+        setHtml(html, null,null);
     }
 
     /**
@@ -83,10 +83,10 @@ public class HtmlTextView extends JellyBeanSpanFixTextView {
      * @param imageGetter for fetching images. Possible ImageGetter provided by this library:
      *                    HtmlLocalImageGetter and HtmlRemoteImageGetter
      */
-    public void setHtml(@RawRes int resId, @Nullable Html.ImageGetter imageGetter) {
+    public void setHtml(@RawRes int resId, @Nullable Html.ImageGetter imageGetter,OnImageClickListener onImageClickListener) {
         InputStream inputStreamText = getContext().getResources().openRawResource(resId);
 
-        setHtml(convertStreamToString(inputStreamText), imageGetter);
+        setHtml(convertStreamToString(inputStreamText), imageGetter,onImageClickListener);
     }
 
     /**
@@ -97,7 +97,7 @@ public class HtmlTextView extends JellyBeanSpanFixTextView {
      * @param imageGetter for fetching images. Possible ImageGetter provided by this library:
      *                    HtmlLocalImageGetter and HtmlRemoteImageGetter
      */
-    public void setHtml(@NonNull String html, @Nullable Html.ImageGetter imageGetter) {
+    public void setHtml(@NonNull String html, @Nullable Html.ImageGetter imageGetter,OnImageClickListener onImageClickListener) {
         Spanned styledText = HtmlFormatter.formatHtml(
                 html, imageGetter, clickableTableSpan, drawTableLinkSpan,
                 new HtmlFormatter.TagClickListenerProvider() {
@@ -105,7 +105,7 @@ public class HtmlTextView extends JellyBeanSpanFixTextView {
                     public OnClickATagListener provideTagClickListener() {
                         return onClickATagListener;
                     }
-                }, indent, removeTrailingWhiteSpace
+                }, onImageClickListener,indent, removeTrailingWhiteSpace
         );
         replaceQuoteSpans(styledText);
         setText(styledText);
@@ -176,6 +176,4 @@ public class HtmlTextView extends JellyBeanSpanFixTextView {
                     flags);
         }
     }
-
-
 }

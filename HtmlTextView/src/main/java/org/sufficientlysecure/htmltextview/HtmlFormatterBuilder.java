@@ -24,6 +24,7 @@ public class HtmlFormatterBuilder {
     private ClickableTableSpan clickableTableSpan;
     private DrawTableLinkSpan drawTableLinkSpan;
     private OnClickATagListener onClickATagListener;
+    private OnImageClickListener onImageClickListener;
     private float indent = 24.0f;
     private boolean removeTrailingWhiteSpace = true;
 
@@ -45,6 +46,9 @@ public class HtmlFormatterBuilder {
 
     public OnClickATagListener getOnClickATagListener() {
         return onClickATagListener;
+    }
+    public OnImageClickListener getOnImageClickListener(){
+        return onImageClickListener;
     }
 
     public float getIndent() {
@@ -79,6 +83,9 @@ public class HtmlFormatterBuilder {
         this.onClickATagListener = onClickATagListener;
     }
 
+    public void setOnImageClickListener(OnImageClickListener onImageClickListener){
+        this.onImageClickListener=onImageClickListener;
+    }
     public HtmlFormatterBuilder setIndent(final float indent) {
         this.indent = indent;
         return this;

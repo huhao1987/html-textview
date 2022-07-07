@@ -61,7 +61,7 @@ public class DataBindingExampleActivity extends Activity {
      */
     @BindingAdapter({"html"})
     public static void displayHtml(HtmlTextView view, @Nullable String html) {
-        view.setHtml(html, new HtmlResImageGetter(view.getContext()));
+        view.setHtml(html, new HtmlResImageGetter(view.getContext()),null);
     }
 
     /**

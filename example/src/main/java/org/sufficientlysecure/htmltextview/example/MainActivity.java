@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,6 +34,7 @@ import org.sufficientlysecure.htmltextview.GlideImageGetter;
 import org.sufficientlysecure.htmltextview.HtmlResImageGetter;
 import org.sufficientlysecure.htmltextview.HtmlTextView;
 import org.sufficientlysecure.htmltextview.OnClickATagListener;
+import org.sufficientlysecure.htmltextview.OnImageClickListener;
 
 import static org.sufficientlysecure.htmltextview.example.WebViewActivity.EXTRA_TABLE_HTML;
 
@@ -86,7 +88,12 @@ public class MainActivity extends Activity {
         textView.blockQuoteBackgroundColor = getResources().getColor(R.color.whitish);
         textView.blockQuoteStripColor = getResources().getColor(R.color.blue);
 
-        textView.setHtml(R.raw.example, new GlideImageGetter(textView));
+        textView.setHtml(R.raw.example, new GlideImageGetter(textView), new OnImageClickListener() {
+            @Override
+            public void onClick(String image) {
+                Toast.makeText(MainActivity.this,image,Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
