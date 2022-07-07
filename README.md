@@ -1,6 +1,6 @@
-# Project stopped
+# Project restart
 
-This project has been stopped. 4.0 is the last release.
+dschuermann provides us a very nice library to show html with Textview, however, he has stoped to maintain it for a log time. I found it and want to do some updates, so I restart it by myself.
 
 Feel free to fork this project and take over maintaining.
 
@@ -18,16 +18,36 @@ Add this to your build.gradle:
 
 ```
 repositories {
-    jcenter()
+    maven { url 'https://jitpack.io' }
+
 }
 
 dependencies {
-    compile 'org.sufficientlysecure:html-textview:4.0'
+    implementation 'com.github.huhao1987:html-textview:v4.0.2'
 }
 ```
 
 ## Example
 
+```java
+<org.sufficientlysecure.htmltextview.HtmlTextView
+            android:id="@+id/html_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="@android:style/TextAppearance.Small" />
+```
+
+The old version only support drawable, as my personal habit, I like to use glide. So I add Glide support(base on Yaser Rajabi`s https://gist.github.com/yrajabi/5776f4ade5695009f87ce7fcbc08078f#file-glideimagegetter-java)
+
+```java
+HtmlTextView htmlTextView = (HtmlTextView) view.findViewById(R.id.html_text);
+
+// loads html from string and displays cat_pic.png from the app's drawable folder
+htmlTextView.setHtml("<h2>Hello wold</h2><ul><li>cats</li><li>dogs</li></ul><img src=\"cat_pic\"/>",
+    new GlideImageGetter(htmlTextView));
+	
+	
+```
 ```java
 <org.sufficientlysecure.htmltextview.HtmlTextView
             android:id="@+id/html_text"
@@ -156,6 +176,12 @@ We recognize the standard table tags:
 as well as the tags extended by HtmlTextView. However, support doesn’t currently extend to tags natively supported by Android (e.g. ``<b>``, ``<big>``, ``<h1>``) which means tables will not include the extra styling.
 
 ### Changelog
+
+#### 4.0.2
+Add Glide 
+
+#### 4.0.1
+* Update the sdk and some libraries to the lastest version
 
 #### 4.0
 * [A tag click enhancements](https://github.com/SufficientlySecure/html-textview/pull/191)
