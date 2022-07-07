@@ -29,6 +29,7 @@ import androidx.annotation.Nullable;
 
 import org.sufficientlysecure.htmltextview.ClickableTableSpan;
 import org.sufficientlysecure.htmltextview.DrawTableLinkSpan;
+import org.sufficientlysecure.htmltextview.GlideImageGetter;
 import org.sufficientlysecure.htmltextview.HtmlResImageGetter;
 import org.sufficientlysecure.htmltextview.HtmlTextView;
 import org.sufficientlysecure.htmltextview.OnClickATagListener;
@@ -85,7 +86,7 @@ public class MainActivity extends Activity {
         textView.blockQuoteBackgroundColor = getResources().getColor(R.color.whitish);
         textView.blockQuoteStripColor = getResources().getColor(R.color.blue);
 
-        textView.setHtml(R.raw.example, new HtmlResImageGetter(getBaseContext()));
+        textView.setHtml(R.raw.example, new GlideImageGetter(textView));
     }
 
     @Override
